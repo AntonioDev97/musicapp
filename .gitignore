@@ -1,0 +1,4 @@
+#Ignore NodeModules
+**/ApiRestMSA/node_modules
+
+
