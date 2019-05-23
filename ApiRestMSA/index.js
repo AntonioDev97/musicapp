@@ -5,7 +5,14 @@ const mongoose = require('mongoose');
 const app = require('./app');
 const port = process.env.PORT || 3977;
 
-mongoose.connect(process.env.URL_DB, { useNewUrlParser:true, connectTimeoutMS: 5000 }).then(
+const optionsCx = {
+    user: process.env.USERDB,
+    pass: process.env.PASSDB,
+    useNewUrlParser:true,
+    connectTimeoutMS:5000
+}
+
+mongoose.connect(process.env.URL_DB, optionsCx).then(
     res => {
         if(res){
             console.log("Conexion Connect 200");
