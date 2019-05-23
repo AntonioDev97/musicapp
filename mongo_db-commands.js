@@ -16,7 +16,6 @@ db.getUser( "admin", {
    showCredentials: true
 } )
 
-use '<dbName>'
 db.createRole({
    role: "operationPrivileges",
    privileges: [

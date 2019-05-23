@@ -2,6 +2,7 @@
 
 const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/user');
+const Jwt = require('../services/jwt');
 
 const pruebas = (req, res) => {
     res.status(200).send({
@@ -67,7 +68,9 @@ const loginUser = (request,response)=>{
                         else{
                             if(check){
                                 if(params.getHash){
-                                    //devolver un token de jwt
+                                    response.status(200).send({
+                                        token: Jwt.createToken(userData)
+                                    });
                                 }
                                 else response.status(200).send({userData});
                             }
