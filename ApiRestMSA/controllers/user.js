@@ -3,6 +3,8 @@
 const bcrypt = require('bcrypt-nodejs');
 const UserModel = require('../models/user');
 const Jwt = require('../services/jwt');
+const Fs = require('fs');
+const Path = require('path');
 
 const pruebas = (req, res) => {
     res.status(200).send({
@@ -85,8 +87,51 @@ const loginUser = (request,response)=>{
         response.status(200).send({message: `Los campos son invalidos revise e intente nuevamente`});
 };
 
+const updateUser = (req,res)=>{
+    let userId = req.params.id;
+    let update = req.body;
+
+    UserModel.findByIdAndUpdate(userId,update,(err,userUpdate)=>{
+        if(err) return res.status(500).send({message: "Error al actualizar el usuario"});
+        else{
+            return (!userUpdate) ? res.status(404).send({message:"No se ha actualizado el usuario"}) : res.status(200).send({user: userUpdate}); 
+        }
+    });
+}
+
+const uploadAvatar = (req,res)=>{
+    let userId = req.params.id;
+    let file_name = "Image not Found";
+    if(req.files){
+        let file_path = req.files.image.path;
+        file_name = file_path.split("\\")[2];
+        let file_ext = file_name.split('\.')[1];    
+        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
+            UserModel.findByIdAndUpdate(userId, {image: file_name},(err,userUpdate)=>{
+                if(err) return res.status(500).send({message: "Error al actualizar imagen del usuario"});
+                else{
+                    return (!userUpdate) ? res.status(404).send({message:"No se ha actualizado la imagen del usuario"}) : res.status(200).send({user: userUpdate}); 
+                }
+            });
+        }
+        else return res.status(200).send({message: "Imagen o extension incorrecta",file: file_name});
+    }
+    else return res.status(200).send({message: 'No se encontro imagen'});
+}
+
+const getImageFile = (req,res)=>{
+    let imageFile = req.params.imageFile;
+    let path_file = `./upl2oad/users/${imageFile}`;
+    Fs.exists(path_file,exist=>{
+        (exist)?res.sendFile(Path.resolve(path_file)) : res.status(200).send({message: "No Existe la imagen"}); 
+    });
+}
+
 module.exports ={
     pruebas,
     registerUser,
-    loginUser
+    loginUser,
+    updateUser,
+    uploadAvatar,
+    getImageFile
 };
