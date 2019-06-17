@@ -66,3 +66,23 @@ db.createRole({
         "musicappPrivileges"
     ],
 });
+
+//Credentials for admin user MongoDB
+//use admin
+db.createUser({
+        user: "admin",
+        pwd: "ya sabes adminstr",
+        roles: [ 
+            { 
+                role: "userAdminAnyDatabase", 
+                db: "admin" 
+            },{
+                role: "root", 
+                db: "admin"
+            }, "readWriteAnyDatabase" 
+        ]
+    }
+)
+
+//connection with shell 
+// mongo -u "admin" -p "admin123" --authenticationDatabase  "admin"
