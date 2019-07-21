@@ -55,8 +55,21 @@ const getArtists = (req, res) => {
     else return res.status(400).send({message:"Parametros incorrectos revise e intente de nuevo."});
 }
 
+const updateArtist = (req, res) => {
+    const artistId = req.params.id;
+    const update = req.body;
+
+    ArtistModel.findByIdAndUpdate(artistId, update, (err, data) => {
+        if(err) return res.status(500).send({message: `Error: ${err}`});
+        else
+            return !data ? res.status(404).send({message: "Error registro no encontrado"})
+                         : res.status(200).send({message:"Exito!", artist: data});
+    });
+}
+
 module.exports = {
     getArtist,
     saveArtist,
-    getArtists
+    getArtists,
+    updateArtist
 }
