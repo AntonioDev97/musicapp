@@ -86,3 +86,6 @@ db.createUser({
 
 //connection with shell 
 // mongo -u "admin" -p "admin123" --authenticationDatabase  "admin"
+
+//set uniques index key
+//db.members.createIndex( { "user_id": 1 }, { unique: true } )
