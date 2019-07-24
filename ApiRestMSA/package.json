@@ -21,6 +21,7 @@
     "mongoose-pagination": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "standart": "^6.1.0"
   }
 }

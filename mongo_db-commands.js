@@ -84,6 +84,18 @@ db.createUser({
     }
 )
 
+//give to Role permission for remove(delete) registers
+db.runCommand(
+   {
+     grantPrivilegesToRole: "musicappPrivileges",
+     privileges: [
+         {
+           resource: { db: "musicapp", collection: "" }, actions: [ "remove" ]
+         }
+     ]
+   }
+)
+
 //connection with shell 
 // mongo -u "admin" -p "admin123" --authenticationDatabase  "admin"
 

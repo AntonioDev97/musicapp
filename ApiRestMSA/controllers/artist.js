@@ -6,7 +6,7 @@ const Mpag = require('mongoose-pagination');
 
 let ArtistModel = require('../models/artist');
 let AlbumModel = require('../models/album');
-let Song = require('../models/song');
+let SongModel = require('../models/song');
 
 const getArtist = (req, res)=>{
     let artistId = req.params.id;
@@ -67,9 +67,34 @@ const updateArtist = (req, res) => {
     });
 }
 
+const deleteArtist = (req, res) => {
+    let artistId = req.params.id;
+
+    ArtistModel.findByIdAndRemove(artistId, (err, dataRemoved) => {
+        if(err)
+            return res.status(500).send({message: `Error al eliminar: ${err}`});
+        else
+            return !dataRemoved ? res.status(404).send({message:"Artista no eliminado"})
+                                : AlbumModel.find({artist: dataRemoved._id}).remove((err, albumRemoved)=>{
+                                    return err ? res.status(500).send({message: `Error al eliminar: ${err}`})
+                                               : !albumRemoved ? res.status(404).send({message:"Album(s) no eliminado(s)"})
+                                                               : SongModel.find({album: albumRemoved._id}).remove((err, songRemoved) => {
+                                                                    return err ? res.status(500).send({message: `Error al eliminar: ${err}`})
+                                                                               :  res.status(200).send({
+                                                                                    message:"Artista Eliminado Correctamente",
+                                                                                    removed: dataRemoved
+                                                                                });
+                                                               });
+                                }); 
+                               
+
+    });
+}
+
 module.exports = {
     getArtist,
     saveArtist,
     getArtists,
-    updateArtist
+    updateArtist,
+    deleteArtist
 }
