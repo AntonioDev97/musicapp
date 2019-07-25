@@ -91,10 +91,40 @@ const deleteArtist = (req, res) => {
     });
 }
 
+const uploadImage = (req,res)=>{
+    let artistId = req.params.id;
+    let file_name = "Image not Found";
+    if(req.files){
+        let file_path = req.files.image.path;
+        file_name = file_path.split("/")[2];
+        let file_ext = file_name.split('\.')[1];    
+        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
+            ArtistModel.findByIdAndUpdate(artistId, {image: file_name},(err,artistUpdate)=>{
+                if(err) return res.status(500).send({message: "Error al actualizar imagen del artista"});
+                else{
+                    return (!artistUpdate) ? res.status(404).send({message:"No se ha actualizado la imagen del artista"}) : res.status(200).send({artist: artistUpdate}); 
+                }
+            });
+        }
+        else return res.status(200).send({message: "Imagen o extension incorrecta",file: file_name});
+    }
+    else return res.status(200).send({message: 'No se encontro imagen'});
+}
+
+const getImageFile = (req,res)=>{
+    let imageFile = req.params.imageFile;
+    let path_file = `./upload/artist/${imageFile}`;
+    Fs.exists(path_file,exist=>{
+        (exist)?res.sendFile(Path.resolve(path_file)) : res.status(200).send({message: "No Existe la imagen"}); 
+    });
+}
+
 module.exports = {
     getArtist,
     saveArtist,
     getArtists,
     updateArtist,
-    deleteArtist
+    deleteArtist,
+    uploadImage,
+    getImageFile
 }
