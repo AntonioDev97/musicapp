@@ -56,7 +56,62 @@ const saveAlbum = (request, response) =>{
     
 };
 
+const updateAlbum = (request, response) => {
+    const albumId = request.params.id;
+    const updateData = request.body;
+
+    AlbumModel.findByIdAndUpdate(albumId, updateData, (err, dataUpdated) => {
+        return err ? response.status(500).send({message: `Ocurrio un error: ${err}`})
+                    : !dataUpdated ? response.status(404).send({message: "No se ha actualizado el album, revise e intente de nuevo"})
+                                    : response.status(200).send({message: "Album actualizado", album: dataUpdated});
+    });
+};
+
+const deleteAlbum = (request, response) => {
+    const albumId = request.params.id;
+
+    AlbumModel.findByIdAndRemove(albumId, (err, albumDeleted) => {
+        if(err)
+            return response.status(500).send({message: `Ocurrio un error: ${err}`});
+        else
+            return !albumDeleted ? response.status(404).send({message: "Album no encontrado"})
+                                 : SongModel.find({album: albumDeleted._id}).remove((err, songRemoved) => {
+                                     err ? response.status(500).send({message:`Ocurrio un error: ${err}`})
+                                         : songRemoved ? response.status(200).send({message:"Exito!", songs: albumDeleted})
+                                                       : response.status(404).send({message: "Canciones no encontradas"});
+                                 });
+    });
+};
+
+const uploadImage = (req,res)=>{
+    let albumtId = req.params.id;
+    let file_name = "Image not Found";
+    if(req.files){
+        let file_path = req.files.image.path;
+        file_name = file_path.split("/")[2];
+        let file_ext = file_name.split('\.')[1];    
+        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
+            AlbumModel.findByIdAndUpdate(albumtId, {image: file_name},(err,albumUpdate)=>{
+                if(err) return res.status(500).send({message: "Error al actualizar imagen del album"});
+                else{
+                    return (!albumUpdate) ? res.status(404).send({message:"No se ha actualizado la imagen del album"}) : res.status(200).send({album: albumUpdate}); 
+                }
+            });
+        }
+        else return res.status(200).send({message: "Imagen o extension incorrecta",file: file_name});
+    }
+    else return res.status(200).send({message: 'No se encontro imagen'});
+}
+
+const getImageFile = (req,res)=>{
+    let imageFile = req.params.image;
+    let path_file = `./upload/albums/${imageFile}`;
+    Fs.exists(path_file,exist=>{
+        (exist)?res.sendFile(Path.resolve(path_file)) : res.status(200).send({message: "No Existe la imagen"}); 
+    });
+}
+
 module.exports = {
-    getAlbum, saveAlbum, getAlbums
+    getAlbum, saveAlbum, getAlbums, updateAlbum, deleteAlbum, uploadImage, getImageFile
 }
 
