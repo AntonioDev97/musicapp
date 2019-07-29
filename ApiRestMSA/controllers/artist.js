@@ -37,10 +37,10 @@ const saveArtist = (req, res) => {
 };
 
 const getArtists = (req, res) => {
-    let page = (req.body.page)?req.body.page:1;
-    let itemsPerPage = req.body.size;
+    let page = (req.body.page)?parseInt(req.body.page):1;
+    let itemsPerPage = parseInt(req.body.size);
     console.log(itemsPerPage);
-    if(typeof page == 'number' && typeof itemsPerPage == 'number'){
+    if(typeof page === 'number' && typeof itemsPerPage === 'number' && !isNaN(page) && !isNaN(itemsPerPage) ) {
         ArtistModel.find().sort('name').paginate(page,itemsPerPage, (rej,artists,countAll)=>{
             if(rej)
                 return res.status(500).send({ message: `Error, porfavor revise e intente de nuevo ${rej}`});

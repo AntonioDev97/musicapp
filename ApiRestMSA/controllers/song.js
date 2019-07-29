@@ -1,5 +1,8 @@
 'use strict'
 
+const Fs = require('fs');
+const Path = require('path');
+
 const SongModel = require('../models/song');
 
 const getSong = (request, response) => {
@@ -19,8 +22,8 @@ const getSong = (request, response) => {
 const getSongs = (request, response) => {
     const albumId = request.params.album;
 
-    let find = SongModel.find().sort('name');
-    if(albumId) find = SongModel.find({album: albumId}).sort('number');
+    let find = SongModel.find().populate([{path: 'album', populate: {path: 'artist'}}]).sort('name');
+    if(albumId) find = SongModel.find({album: albumId}).populate({path: 'album', populate: {path: 'artist'}}).sort('number');
 
     find.exec((err, songsStored) => {
         if(err)
@@ -57,6 +60,65 @@ const saveSong = (request, response) => {
     }
 };
 
+const updateSong = (request, response ) => {
+    const songId = request.params.id;
+    const update = request.body;
+
+    SongModel.findByIdAndUpdate(songId, update).populate({path: 'album', populate: {path: 'artist'}}).exec((err, songUpdated) => {
+        if(err) return response.status(500).send({message: `Ocurrio un error: ${err}`});
+        else 
+            if(songUpdated) return response.status(200).send({message: "La cancion se ha actualizado!", song: songUpdated});
+            else return response.status(404).send({message: "Error no se ha actualizado la cancion!"});
+    });
+
+};
+
+const deleteSong = (request, response) => {
+    const songId = request.params.id;
+
+    SongModel.findByIdAndRemove(songId, (err, songDeleted) => {
+        if(err) return response.status(500).send({message: `Ocurrio un error: ${err}`});
+        else
+            if(!songDeleted) return response.status(404).send({message: "No se ha encontrado la cancion"});
+            else return response.status(200).send({message: "Exito la cancion se elimino", songRemoved: songDeleted});
+    });
+};
+
+const uploadSong = (request, response) => {
+    const songId = request.params.song;
+    let file_name = "Sound not found";
+    if(request.files){
+        let file_path = request.files.fileSong.path;
+        file_name = file_path.split("/")[2];
+        let file_ext = file_name.split('\.')[1];
+        if(file_ext === "mp3" || file_ext === "ogg")
+            SongModel.findByIdAndUpdate(songId, {file: file_name},(err, songUpdated) => {
+                if(err) return response.status(500).send({message: `Ocurrio un error ${err}`});
+                else
+                    if(songUpdated) return response.status(200).send({message:"Exito, cancion disponible", song: songUpdated});
+                    else return response.status(404).send({message: "No se ha subido la cancion!"});
+            });
+        else return response.status(422).send({message: "Archivo incorrecto", file: file_name});    
+    }
+    else return response.status(400).send({message: "Eliga un archivo 'mp3' o 'ogg'"});
+};
+
+const getSongFile = (request, response) => {
+    const songFile = request.params.songFile;
+    
+    let song_path = `./upload/songs/${songFile}`;
+    Fs.exists(song_path, file => {
+        return file ? response.status(200).sendFile(Path.resolve(song_path))
+                    : response.status(404).send({message: "No se encontro la cancion!"});
+    });
+};
+
 module.exports = {
-    getSong, saveSong
+    getSong, 
+    saveSong, 
+    getSongs, 
+    updateSong, 
+    deleteSong,
+    uploadSong,
+    getSongFile
 }
