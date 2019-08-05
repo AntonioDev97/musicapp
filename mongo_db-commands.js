@@ -101,3 +101,6 @@ db.runCommand(
 
 //set uniques index key
 //db.members.createIndex( { "user_id": 1 }, { unique: true } )
+
+//change password to user mongodb
+//db.changeUserPassword("accountUser", "SOh3TbYhx8ypJPxmt1oOfL")
