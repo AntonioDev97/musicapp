@@ -1,21 +1,63 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div *ngIf="identity" class="navigation col-lg-1">
+  <h1>{{title}}</h1>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div *ngIf="identity" class="central col-lg-11">
+  <p>estas logueado en la aplicacion</p>
+</div>
+
+<div *ngIf="!identity" class="col-12 p-5">
+  <div class="row">
+    <div class="col-6">
+      <h1>Identificate</h1>
+      <div *ngIf="errMsg" class="alert alert-danger" role="alert">
+        {{errMsg}}
+      </div>
+      <form class="col-10" [formGroup]="loginForm" (ngSubmit)="authenticationUser()">
+        <div class="form-group">
+          <label for="inputEmail">Correo Electronico:</label>
+          <input type="email" class="form-control" [ngClass]="{'is-invalid': !loginForm.get('email').valid && loginForm.get('email').touched}" id="inputEmail" placeholder="Email" formControlName="email">
+          <div *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched" class="invalid-feedback d-block">
+            Necesita un email 
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputPass">Contraseña:</label>
+          <input id="inputPass" type="password" class="form-control" placeholder="Contraseña" formControlName="password" [ngClass]="{'is-invalid': !loginForm.get('password').valid && loginForm.get('password').touched}">
+          <div *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="invalid-feedback d-block">
+            Necesita una contraseña
+          </div>
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary mx-auto">Entrar</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-6">
+      <h1>Registrate</h1>
+      <form class="col-10">
+        <div class="form-group">
+          <label for="name">Nombre:</label>
+          <input type="text" id="name" class="form-control" placeholder="Nombre">
+        </div>
+        <div class="form-group">
+          <label for="apellidos">Apellidos:</label>
+          <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Correo Electronico:</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="inputPass">Contraseña:</label>
+          <input id="inputPass" type="password" class="form-control" autocomplete="new-password" placeholder="Contraseña">
+        </div>
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary mx-auto">Registrarse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>

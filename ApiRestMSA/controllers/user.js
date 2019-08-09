@@ -52,15 +52,15 @@ const registerUser = (req, res) =>{
 const loginUser = (request,response)=>{
     
     let params = request.body;
-    let user;
+    let email;
     let passw;
     let validation=true;
 
-    (params.user!=null)?user=params.user:validation=false;
-    (params.passw!=null)?passw=params.passw:validation=false;
+    (params.email!=null)?email=params.email:validation=false;
+    (params.password!=null)?passw=params.password:validation=false;
 
     if(validation){
-        UserModel.findOne({surname: user},(err,userData)=>{
+        UserModel.findOne({email: email},(err,userData)=>{
             if(err) response.status(500).send({message:`¡Error!: ${err}`});
             else{
                 if(!userData) response.status(404).send({message: "Usuario no encontrado"});
@@ -84,7 +84,7 @@ const loginUser = (request,response)=>{
         });
     }
     else
-        response.status(200).send({message: `Los campos son invalidos revise e intente nuevamente`});
+        response.status(422).send({message: `Los campos son invalidos revise e intente nuevamente`});
 };
 
 const updateUser = (req,res)=>{
