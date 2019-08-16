@@ -4,13 +4,14 @@ import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 import { GLOBAL } from './global';
 
+import { User } from '../models/user.model';
+
 
 
 @Injectable()
 
 export class UserService{
     private url: string;
-    private readonly controlller:string = "login-request"
     private headers:HttpHeaders;
 
     constructor(private http:HttpClient){
@@ -25,6 +26,23 @@ export class UserService{
 
         let headerss = this.headers;
         let dataSend = userLogin;
-        return this.http.post(this.url+this.controlller, dataSend, {headers: headerss});
+        return this.http.post(`${this.url}login-request`, dataSend, {headers: headerss});
+    }
+
+    public register(userRegister: User):Observable<any>{
+       let headerss = this.headers;
+       let dataSend = userRegister;
+
+       return this.http.post(`${this.url}registerUser`, dataSend, {headers: headerss});
+    }
+
+    public getIdentity(){
+        let identity = JSON.parse(localStorage.getItem('identity'));
+        return identity ? identity : null;
+    }
+
+    public getToken(){
+        let token = localStorage.getItem('token');
+        return token ? token : null;
     }
 }

@@ -36,7 +36,7 @@ const registerUser = (req, res) =>{
                 user.save((err, userStored)=>{
                     if(err) res.status(500).send({message: `Error al guardar usuario: ${err}`});
                     else{
-                        (userStored)?res.status(200).send({message: `Exito! ${userStored}`}): res.status(404).send({message: "No se ha registrado el usuario"});
+                        (userStored)?res.status(200).send({message: `Exito!`, userStored}): res.status(404).send({message: "No se ha registrado el usuario"});
                     }
                 });
             }
@@ -68,6 +68,7 @@ const loginUser = (request,response)=>{
                     bcrypt.compare(passw, userData.password,(err, check)=>{
                         if(err) response.status(500).send({message: "Error al desencriptar contraseña"});
                         else{
+                            userData.password = undefined;
                             if(check){
                                 if(params.getHash){
                                     response.status(200).send({
