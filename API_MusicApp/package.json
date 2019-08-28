@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "start": "node build/src/index.js",
+    "start": "node src/index.js",
+    "start-dev": "node build/src/index.js",
     "ts:node": "ts-node src/index.ts",
-    "build": "tsc",
+    "buildw": "tsc && copy .\\.env .\\build\\",
+    "buildx": "tsc && cp ./.env ./build/",
     "clean": "del build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

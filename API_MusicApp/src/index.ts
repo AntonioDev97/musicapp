@@ -11,7 +11,8 @@ const optionsCX = {
     user: process.env.USERDB,
     pass: process.env.PASSDB,
     useNewUrlParser: true,
-    connectTimeoutMS: 5000
+    connectTimeoutMS: 5000,
+    useFindAndModify:false
 }
 
 mongoose.connect(`${process.env.URLDB}`, optionsCX).then(

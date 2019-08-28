@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import { UserController } from '../controllers/user.controller'
+import { EnsureAuth } from "../middleware/authenticated.middleware";
 
 class UserRoute {
 
@@ -13,7 +14,9 @@ class UserRoute {
         let UsCtrl = new UserController();
         
         this.api.get('/test', UsCtrl.test );
-        this.api.post('/registerUser', UsCtrl.registerUser );
+        this.api.post('/register', UsCtrl.registerUser);
+        this.api.put('/updateUser/:id', EnsureAuth, UsCtrl.updateUser);
+        this.api.post('/login', UsCtrl.loginUser);
     };
 
 }

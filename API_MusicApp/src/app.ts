@@ -25,9 +25,9 @@ export class AppServer{
     } 
 
     private setEndPoints():void{
-        this.server.use('/api', [ 
-            User_Route, 
-        ]);
+        this.server.use('/user', User_Route);
+        this.server.get('/', (req:Request, res:Response) => res.status(200).send('¡API WORK! \n Welcome to API_MusicApp'));
+        //this.server.use('*', (req: Request, res: Response) => res.status(200).send("¡API CAN'T GET URL PLEASE TRY LATER OR VERIFY ENDPOINT!"));
     }
 
 }
