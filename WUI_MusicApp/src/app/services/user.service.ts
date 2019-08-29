@@ -3,18 +3,20 @@ import { HttpResponse, HttpClient, HttpHeaders } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 import { GLOBAL } from './global';
+import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
 
 
 
-@Injectable()
+
+@Injectable({providedIn: 'root'})
 
 export class UserService{
     private url: string;
     private headers:HttpHeaders;
 
-    constructor(private http:HttpClient){
+    constructor(private http:HttpClient, private router:Router){
         this.url = GLOBAL.url;
         this.headers = new HttpHeaders();
         this.headers.set("Content-Type","application/json");
@@ -36,13 +38,21 @@ export class UserService{
        return this.http.post(`${this.url}registerUser`, dataSend, {headers: headerss});
     }
 
-    public getIdentity(){
-        let identity = JSON.parse(localStorage.getItem('identity'));
-        return identity ? identity : null;
-    }
+    /* public updateUser(userUpdate:User):Observable<any>{
+        if(typeof userUpdate )
 
-    public getToken(){
-        let token = localStorage.getItem('token');
-        return token ? token : null;
-    }
+    } */
+
+    public logout(){
+        localStorage.removeItem('identity');
+        localStorage.removeItem('token');
+        localStorage.clear();
+
+        if(!localStorage.getItem('identity') && !localStorage.getItem('token'))
+            this.router.navigate(['login']);
+
+        else return alert('Error al cerrar la sesion');
+    }  
+
+  
 }

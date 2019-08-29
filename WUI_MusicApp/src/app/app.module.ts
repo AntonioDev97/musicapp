@@ -6,9 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+//Interceptors
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpInterceptorService } from './services/http.interceptor'
+
+//Components
+import { LoginComponent } from './components/login.component';
+import { ProfileComponent } from './components/profile.component';
+import { HomeComponent } from './components/home.component';
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    ProfileComponent, 
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -16,7 +29,13 @@ import { AppComponent } from './app.component';
     FormsModule, ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
