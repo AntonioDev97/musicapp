@@ -15,11 +15,9 @@ export class UserController {
     public registerUser(req:Request, res: Response):any{
 
         const user = new User();
-
         const params = req.body;
 
         let validation = true;
-
         //VALIDATION
         (params.name!=null && params.name.length > 3)?user.name=params.name:validation=false;
         (params.surname!=null && params.surname.length > 3)?user.surname=params.surname:validation=false;
