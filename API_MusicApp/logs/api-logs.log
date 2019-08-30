@@ -1,0 +1,37 @@
+[30-08-2019 10:22:16]error - Test Error
+[30-08-2019 10:25:54]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:26:57]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:26:59]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:27:00]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:27:02]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:27:02]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:28:43]error - E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:29:32]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:30:14]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+[30-08-2019 10:31:07]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+    at Function.create (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\error.js:43:12)
+    at toError (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\utils.js:149:22)
+    at coll.s.topology.insert (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\operations\collection_ops.js:859:39)
+    at C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\connection\pool.js:397:18
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+[30-08-2019 10:31:42]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+    at Function.create (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\error.js:43:12)
+    at toError (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\utils.js:149:22)
+    at coll.s.topology.insert (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\operations\collection_ops.js:859:39)
+    at C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\connection\pool.js:397:18
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+[30-08-2019 10:31:47]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+    at Function.create (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\error.js:43:12)
+    at toError (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\utils.js:149:22)
+    at coll.s.topology.insert (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\operations\collection_ops.js:859:39)
+    at C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\connection\pool.js:397:18
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+[30-08-2019 10:36:27]error - MongoError: E11000 duplicate key error collection: musicapp.users index: email_1 dup key: { email: "test@test.com" }
+    at Function.create (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\error.js:43:12)
+    at toError (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\utils.js:149:22)
+    at coll.s.topology.insert (C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb\lib\operations\collection_ops.js:859:39)
+    at C:\Users\Golstats\Documents\Personal\musicapp\API_MusicApp\node_modules\mongodb-core\lib\connection\pool.js:397:18
+    at process._tickCallback (internal/process/next_tick.js:61:11)
+[30-08-2019 10:36:50]error - Test Error
+[30-08-2019 10:36:53]error - Test Error
+[30-08-2019 10:45:46]error - Test Error
