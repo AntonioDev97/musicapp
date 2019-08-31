@@ -14,8 +14,9 @@ class UserRoute {
         let UsCtrl = new UserController();
         
         this.api.get('/test', UsCtrl.test );
+        this.api.get('/testSentry', UsCtrl.testLoggers);
         this.api.post('/register', UsCtrl.registerUser);
-        this.api.put('/updateUser/:id', EnsureAuth, UsCtrl.updateUser);
+        this.api.put('/update/:id', EnsureAuth, UsCtrl.updateUser);
         this.api.post('/login', UsCtrl.loginUser);
     };
 
