@@ -8,10 +8,10 @@
     "start": "node src/index.js",
     "start-dev": "node build/src/index.js",
     "ts:node": "ts-node src/index.ts",
-    "buildw": "tsc && copy .\\.env .\\build\\",
+    "buildw": "tsc && copy .\\.env .\\build\\ && copy .\\package.json .\\build\\ && cd build && npm install --production",
     "buildx": "tsc && cp ./.env ./build/",
     "clean": "del build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register tests/**/*.spec.ts"
   },
   "author": "Juan Antonio Olvera Cruz",
   "license": "MIT",
@@ -31,13 +31,19 @@
   },
   "devDependencies": {
     "@types/bcrypt-nodejs": "0.0.30",
+    "@types/chai": "^4.2.0",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.1",
+    "@types/mocha": "^5.2.7",
     "@types/mongoose": "^5.5.13",
     "@types/node": "^12.7.2",
     "@types/raven": "^2.5.3",
+    "@types/supertest": "^2.0.8",
     "@types/winston": "^2.4.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
     "nodemon": "^1.19.1",
+    "supertest": "^4.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }
