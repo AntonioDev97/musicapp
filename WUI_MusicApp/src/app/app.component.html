@@ -1,12 +1,2 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div *ngIf="identity" class="navigation col-lg-1">
-  <h1>{{title}}</h1>
-  <span>{{identity.name}} {{identity.surname}}</span>
-  <span class="btn btn-warning" (click)="logout()">Cerrar Sesion</span>
-</div>
-
-<div *ngIf="identity" class="central col-lg-11">
-  <p>estas logueado en la aplicacion</p>
-</div>
-
 <router-outlet></router-outlet>

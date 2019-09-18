@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { isUndefined } from 'util';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import  { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 
 import { UserService } from '../services/user.service';
