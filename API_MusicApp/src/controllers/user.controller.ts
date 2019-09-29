@@ -100,4 +100,12 @@ export class UserController {
             return hdlResponse.makeResponse(res, 500, "Error al actualizar Usuario", error)
         }
     }
+
+    public uploadAvatar(req:Request, res:Response){
+        
+        const userId = req.params.id;
+        let file_name = "Image not founde";
+
+        //if(req.files)
+    }
 }
